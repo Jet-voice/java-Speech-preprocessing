@@ -24,7 +24,7 @@ spSound：处理前的采样数据
 fpPreSound：处理后的采样数据  
 `fpPreSound[i] = (float)(spSound[i]) - float(spSound[i - 1]) * 0.9375;`
 
-分帧
+##分帧  
 函数名：AudEnframe(float *Sound,DWORD FrmLen,DWORD FrmSft,DWORD dwSoundLen)
 功能：给每一帧的fltFrame[Frmlen]赋采样点的值，个数是帧长
 解释：
@@ -37,19 +37,19 @@ FrmNum表示有多少帧
 FrmNum = (dwSoundLen - (FrmLen - FrmSft)) / FrmSft;
 
 
-汉明窗系数
-函数名：Hamming(DWORD FrmLen)
-功能：求汉明窗系数，输入的是每一帧的帧长，要用到PI。这个数组是固定值，只有帧长决定
-解释：
-FrmLen 帧长，固定值
+##汉明窗系数  
+函数名：Hamming(DWORD FrmLen)  
+功能：求汉明窗系数，输入的是每一帧的帧长，要用到PI。这个数组是固定值，只有帧长决定  
+解释：  
+FrmLen 帧长，固定值  
 fltHamm[i] = (float)(0.54 - 0.46*cos((2*i*PI1) / (FrmLen-1)));
 
 
 
-加窗
-函数名：AudHamming(DWORD FrmLen)
-功能：输入的是每一帧的帧长，需要利用到求得的汉明窗系数，具体是每个采样点的值乘以汉明窗系数，再把结果赋予fltFrame[]
-解释：
+##加窗  
+函数名：AudHamming(DWORD FrmLen)  
+功能：输入的是每一帧的帧长，需要利用到求得的汉明窗系数，具体是每个采样点的值乘以汉明窗系数，再把结果赋予fltFrame[]  
+解释：  
 需要先求得汉明窗系数fltHamm[i];
 (stpWav->fltFrame)[i] 每一帧采样点数据
 for(DWORD i = 0; i < FrmLen; i++)
@@ -60,11 +60,11 @@ for(DWORD i = 0; i < FrmLen; i++)
 
 
 
-每一帧短时能量
-函数名：AudSte(fltSound *fpFrmSnd, DWORD FrmLen)
-功能：求每一帧的短时能量，即将所有这一帧的所有样点值相加，fpFrmSnd是帧第一个样本值
-解释:
-fltShortEnergy：每一帧短时能量
+##每一帧短时能量  
+函数名：AudSte(fltSound *fpFrmSnd, DWORD FrmLen)  
+功能：求每一帧的短时能量，即将所有这一帧的所有样点值相加，fpFrmSnd是帧第一个样本值  
+解释:  
+fltShortEnergy：每一帧短时能量  
 fpFrmSnd：每个样本点的值
 for(int i = 0; i < FrmLen; i++)
 	{
@@ -72,12 +72,12 @@ for(int i = 0; i < FrmLen; i++)
 	}
 
 
-一帧的过零率
-函数名：AudZcr(fltSound *fpFrmSnd, DWORD FrmLen,fltSound ZcrThresh)
-功能：求解一帧的过零率，fpFrmSnd帧第一个采样点地址，FrmLen帧长，ZcrThresh过零率阀值
-解释：
+##一帧的过零率  
+函数名：AudZcr(fltSound *fpFrmSnd, DWORD FrmLen,fltSound ZcrThresh)  
+功能：求解一帧的过零率，fpFrmSnd帧第一个采样点地址，FrmLen帧长，ZcrThresh过零率阀值  
+解释：  
  
-fpFrmSnd样本点的值
+##fpFrmSnd样本点的值
 DWORD CVad::AudZcr(fltSound *fpFrmSnd, DWORD FrmLen,fltSound ZcrThresh)
 {
 	DWORD    dwZcrRate = 0;
@@ -92,9 +92,9 @@ DWORD CVad::AudZcr(fltSound *fpFrmSnd, DWORD FrmLen,fltSound ZcrThresh)
 
 
 
-估计噪声阀值
-函数名： AudNoiseEstimate（）
-功能：计算双门限阀值
+##估计噪声阀值  
+函数名： AudNoiseEstimate（）  
+功能：计算双门限阀值  
 解释：
 fltSteThresh [2] 短时能量阀值，[0]高 [1]低
 dwZcrThresh [2]  过零率阀值， [0]高 [1]低
@@ -108,9 +108,9 @@ dwZcrThresh [2]  过零率阀值， [0]高 [1]低
 	fltSteThresh[0] = (float)StrThresh / NoiseFrmLen*0.7;
 	fltSteThresh[1] = (float)(StrThresh / NoiseFrmLen)*0.5;//*0.95;
 
-端点检测
-函数名: AudVadEstimate(void)
-功能：端点检测，需要用到估计阀值的函数，最后得出有效起始点和有效截止点
+##端点检测  
+函数名: AudVadEstimate(void)  
+功能：端点检测，需要用到估计阀值的函数，最后得出有效起始点和有效截止点  
 void CVad::AudVadEstimate(void) {
 	//Extract Threshold
 	DWORD		ZcrLow=dwZcrThresh[1];
