@@ -8,14 +8,14 @@
 
 ## 帧的结构体
 
-`typedef struct _AudFrame
-{
+	`typedef struct _AudFrame
+	{
 	float fltFrame[FRM_LEN];
 	float fltSte;	 //这一帧的短时能量
 	DWORD	 dwZcr;	 //这一帧的过零率
 	bool	 blVad;//判断这帧是否有效
 	struct _AudFrame * AudFrmNext;//下一帧的地址，不知道python有没有地址
-}AudFrame;`
+	}AudFrame;`
 
 
 ## 读取音频  
@@ -59,7 +59,7 @@ FrmNum = (dwSoundLen - (FrmLen - FrmSft)) / FrmSft;
 
 解释：  
 FrmLen 帧长，固定值  
-fltHamm[i] = (float)(0.54 - 0.46*cos((2*i*PI1) / (FrmLen-1)));
+	fltHamm[i] = (float)(0.54 - 0.46*cos((2*i*PI1) / (FrmLen-1)));
 
 
 
@@ -71,8 +71,8 @@ fltHamm[i] = (float)(0.54 - 0.46*cos((2*i*PI1) / (FrmLen-1)));
 
 解释：  
 需要先求得汉明窗系数fltHamm[i];
-(stpWav->fltFrame)[i] 每一帧采样点数据
-for(DWORD i = 0; i < FrmLen; i++)
+	(stpWav->fltFrame)[i] //每一帧采样点数据
+	for(DWORD i = 0; i < FrmLen; i++)
 		{
 						(stpWav->fltFrame)[i] *= fltHamm[i];
 		}
@@ -89,7 +89,7 @@ for(DWORD i = 0; i < FrmLen; i++)
 解释:  
 fltShortEnergy：每一帧短时能量  
 fpFrmSnd：每个样本点的值
-for(int i = 0; i < FrmLen; i++)
+	for(int i = 0; i < FrmLen; i++)
 	{
 		fltShortEnergy += fabs(*fpFrmSnd++);
 	}
@@ -105,7 +105,7 @@ for(int i = 0; i < FrmLen; i++)
  
 ##fpFrmSnd样本点的值
 DWORD CVad::AudZcr(fltSound *fpFrmSnd, DWORD FrmLen,fltSound ZcrThresh)
-{
+	{
 	DWORD    dwZcrRate = 0;
 
 	for(int i = 0; i < FrmLen - 1; i++)
@@ -114,7 +114,7 @@ DWORD CVad::AudZcr(fltSound *fpFrmSnd, DWORD FrmLen,fltSound ZcrThresh)
 			dwZcrRate++;
 	}
 	return dwZcrRate;
-}
+	}
 
 
 
@@ -125,8 +125,8 @@ DWORD CVad::AudZcr(fltSound *fpFrmSnd, DWORD FrmLen,fltSound ZcrThresh)
 功能：计算双门限阀值  
 
 解释：
-fltSteThresh [2] 短时能量阀值，[0]高 [1]低
-dwZcrThresh [2]  过零率阀值， [0]高 [1]低
+	fltSteThresh [2] 短时能量阀值，[0]高 [1]低
+	dwZcrThresh [2]  过零率阀值， [0]高 [1]低
 	ZcrThresh = 0;	
 	StrThresh = 0.0;	
 	ZcrThresh = 所有帧的过零率之和
