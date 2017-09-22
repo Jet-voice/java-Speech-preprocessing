@@ -5,22 +5,22 @@ public class MFCC {
 	public static int LEN_PF_MFCC = 256;
 	public static int SIZE_X_X_MFCC = 32;
 	public static int SIZE_X_Y_MFCC = 140;
-	public static int FS_MFCC = 8000;//HZÆµÂÊ
-	public static int N_MFCC = 256;//FFTµÄ³¤¶È
-	public static int SIZE_DCT_X_MFCC = 13;//dctÏµÊı¶şÎ¬Êı×éx´óĞ¡
-	public static int SIZE_DCT_Y_MFCC = 25;//dctÏµÊı¶şÎ¬Êı×éy´óĞ¡
+	public static int FS_MFCC = 8000;//HZé¢‘ç‡
+	public static int N_MFCC = 256;//FFTçš„é•¿åº¦
+	public static int SIZE_DCT_X_MFCC = 13;//dctç³»æ•°äºŒç»´æ•°ç»„xå¤§å°
+	public static int SIZE_DCT_Y_MFCC = 25;//dctç³»æ•°äºŒç»´æ•°ç»„yå¤§å°
 	public static double FH_MFCC = 0.5;
 	public static double FL_MFCC = 0;
 	public double buf[][]; 
-	public double bank[][];//melÂË²¨Æ÷×éÏµÊı
+	public double bank[][];//melæ»¤æ³¢å™¨ç»„ç³»æ•°
 	public int Pos;
-	public static int P_MFCC = 24;//melÂË²¨Æ÷×é¸öÊı
-	public static double pi = 3.1415926536;// ¶¨Òåpi
-	public double hamming[];//ººÃ÷´°
+	public static int P_MFCC = 24;//melæ»¤æ³¢å™¨ç»„ä¸ªæ•°
+	public static double pi = 3.1415926536;// å®šä¹‰pi
+	public double hamming[];//æ±‰æ˜çª—
 	public double working[];
 	public double workingi[];
-	public double dctcoef[][];//dctÏµÊı
-	public double stren_win[];//¹éÒ»»¯µ¹Æ×ÌáÉı´°¿Ú
+	public double dctcoef[][];//dctç³»æ•°
+	public double stren_win[];//å½’ä¸€åŒ–å€’è°±æå‡çª—å£
 	public double result[];
 	public int index1;
 	public double m[][];
@@ -45,10 +45,10 @@ public class MFCC {
 		 }
 	     for(i = 1;i <= 256;i++)
 		 {
-			 //¼Ó´°¡ª¡ª//s=y'.*hamming(256); Í¬Ê±´íÒ»¸ñ¡£
+			 //åŠ çª—â€”â€”//s=y'.*hamming(256); åŒæ—¶é”™ä¸€æ ¼ã€‚
 			 working[i - 1] = working[i] * hamming[i]; 
 		 }
-		 //¿ìËÙ¸µÀïÒ¶±ä»»¡ª¡ª//t=abs(fft(s)); 
+		 //å¿«é€Ÿå‚…é‡Œå¶å˜æ¢â€”â€”//t=abs(fft(s)); 
 	     fft(); 
 	     for(i = 256;i >= 1;i--) 
 	     {
@@ -62,7 +62,7 @@ public class MFCC {
 	         { 
 	             sum = sum + bank[i][j] * working[j]; 
 	         } 
-	         if(sum != 0)//Çó¶ÔÊı
+	         if(sum != 0)//æ±‚å¯¹æ•°
 			 {
 				 proc_buf1[i] = Math.log(sum); 
 			 }
@@ -76,7 +76,7 @@ public class MFCC {
 	         sum = 0; 
 	         for(j = 1;j <= 24;j++) 
 	         { 
-	             sum = sum + dctcoef[i][j] * proc_buf1[j]; //dctcoefÊÇDCTÏµÊı
+	             sum = sum + dctcoef[i][j] * proc_buf1[j]; //dctcoefæ˜¯DCTç³»æ•°
 	         } 
 	         buf[Pos][i] = sum * stren_win[i]; 
 	     }  
@@ -90,9 +90,9 @@ public class MFCC {
 	     }  
 	 } 
 	/***************************
-	*melÂË²¨Æ÷×éÏµÊı ,ok
-	*º¯ÊıÃû: melbank(void)
-	*¹¦ÄÜ£ºÇómelÂË²¨Æ÷×éÏµÊı£¬²¢ÇÒ¶ÔÆä½øĞĞ¹éÒ»»¯,Ö÷Òª²ÎÊıP_MFCC£¬LEN_PF_MFCC£¬FS_MFCC£¬FH_MFCC£¬FL_MFCC
+	*melæ»¤æ³¢å™¨ç»„ç³»æ•° ,ok
+	*å‡½æ•°å: melbank(void)
+	*åŠŸèƒ½ï¼šæ±‚melæ»¤æ³¢å™¨ç»„ç³»æ•°ï¼Œå¹¶ä¸”å¯¹å…¶è¿›è¡Œå½’ä¸€åŒ–,ä¸»è¦å‚æ•°P_MFCCï¼ŒLEN_PF_MFCCï¼ŒFS_MFCCï¼ŒFH_MFCCï¼ŒFL_MFCC
 	*
 	*************************/
 public void melbank(){
@@ -169,9 +169,9 @@ public void melbank(){
 
 
 /***************************
-*¿ìËÙ¸µÀïÒ¶±ä»»
-*º¯ÊıÃû: fft(void)
-*¹¦ÄÜ£º
+*å¿«é€Ÿå‚…é‡Œå¶å˜æ¢
+*å‡½æ•°å: fft(void)
+*åŠŸèƒ½ï¼š
 *************************/
 public void fft(){
 	 int i,j = 0,k,n,l,le,le1,ip,sign = -1; 
@@ -189,7 +189,7 @@ public void fft(){
              xi[j] = xi[i]; 
              xi[i] = ti;*/ 
          } 
-         k = n >> 1; //Ïàµ±ÓÚn/2
+         k = n >> 1; //ç›¸å½“äºn/2
          while(k <= j)
 		 { 
              j -= k; 
@@ -220,16 +220,16 @@ public void fft(){
              tr = ur * wr - ui * wi; 
              ti = ur * wi + ui * wr; 
              ur = tr; 
-             ui = ti; //¿ÉÒÔ¼ò»¯
+             ui = ti; //å¯ä»¥ç®€åŒ–
          } 
      } 
 }
 
 
 /***************************
-*ÀëÉ¢ÓàÏÒ±ä»»DCT,ok
-*º¯ÊıÃû: dct(void)
-*¹¦ÄÜ£ºÇóDCTÏµÊı
+*ç¦»æ•£ä½™å¼¦å˜æ¢DCT,ok
+*å‡½æ•°å: dct(void)
+*åŠŸèƒ½ï¼šæ±‚DCTç³»æ•°
 *************************/
 public void dct(){
 	dctcoef = new double [SIZE_DCT_X_MFCC][SIZE_DCT_Y_MFCC];
@@ -246,9 +246,9 @@ public void dct(){
 
 
 /***************************
-*¹éÒ»»¯µ¹Æ×ÌáÉı´°¿Ú,ok
-*º¯ÊıÃû: cal_stren_win(void)
-*¹¦ÄÜ£º
+*å½’ä¸€åŒ–å€’è°±æå‡çª—å£,ok
+*å‡½æ•°å: cal_stren_win(void)
+*åŠŸèƒ½ï¼š
 *************************/
 public void cal_stren_win(){
 	stren_win = new double[13];
@@ -261,7 +261,7 @@ public void cal_stren_win(){
 			 b = stren_win[i]; 
 		 }
      } 
-     for(int i = 1;i <= 12;i++) //¹éÒ»»¯
+     for(int i = 1;i <= 12;i++) //å½’ä¸€åŒ–
 	 { 
          stren_win[i] = stren_win[i] / b; 
      } 
@@ -269,9 +269,9 @@ public void cal_stren_win(){
 	
 }
 /***************************
-*ººÃ÷´°
-*º¯ÊıÃû: calcu_hamming(void)
-*¹¦ÄÜ£º
+*æ±‰æ˜çª—
+*å‡½æ•°å: calcu_hamming(void)
+*åŠŸèƒ½ï¼š
 *************************/
 public void calcu_hamming() 
 { 
@@ -281,7 +281,7 @@ public void calcu_hamming()
         hamming[i] = 0.54 - 0.46 * Math.cos(2 * pi * (i-1)/(256-1)); 
     } 
 } 
-public void getMfcc(String path)
+public int[][] getMfcc(String path)
 {
 
 	 Vad vad = new Vad(path);
@@ -306,7 +306,7 @@ public void getMfcc(String path)
 			 index1++;
 		 }
 	 }
-	 
+	 return m;
 	 
 
 }
