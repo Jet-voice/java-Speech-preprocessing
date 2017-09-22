@@ -12,7 +12,7 @@ public class waveshow {
 //         Vad vad = new Vad(filename);
 	  //      WaveFileReader reader = new WaveFileReader(filename); 
 	 //       int max = 0;
-	//        System.out.println("²ÉÑùÂÊ"+reader.getSampleRate());//11025
+	//        System.out.println("Â²Ã‰Ã‘Ã¹Ã‚ÃŠ"+reader.getSampleRate());//11025
 	         //   System.out.println(max);//55296
 //	            try{
 //	            	FileWriter fileWriter=new FileWriter("d:\\javaresult.txt");
@@ -30,7 +30,7 @@ public class waveshow {
 //         System.out.println(vad.WavStart); 
 //	           System.out.println(vad.WavEnd); 
 		MFCC mfcc = new MFCC();
-		mfcc.getMfcc("d://a191.wav");
+		int[][] result = mfcc.getMfcc("d://a191.wav");
 	        }    
 	    }  
 	
